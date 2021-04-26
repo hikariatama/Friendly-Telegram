@@ -101,6 +101,11 @@ class TestMod(loader.Module):
 		except ValueError:
 			await utils.answer(message, self.strings("suspend_invalid_time", message))
 
+	@loader.owner
+	async def devcmd(self, message):
+		""".dev"""
+		await utils.answer(message, 'Dev branch!')
+
 	async def pingcmd(self, message):
 		"""Test your userbot ping"""
 		start = datetime.now()
