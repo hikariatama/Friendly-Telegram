@@ -1,5 +1,20 @@
-#    Friendly Telegram Userbot
-#    by GeekTG Team
+#    Friendly Telegram (telegram userbot)
+#    Copyright (C) 2018-2021 The Authors
+
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#    Modded by GeekTG Team
 
 """Loads modules from disk and dispatches stuff, and stores state"""
 
@@ -279,16 +294,15 @@ class Modules():
 		self.client = client
 		await self._compat_layer.client_ready(client)
 		try:
-			await asyncio.gather(*[self.send_ready_one(mod, client, db, allclients, True) for mod in self.modules])
+			await asyncio.gather(*[self.send_ready_one(mod, client, db, allclients) for mod in self.modules])
 			await asyncio.gather(*[mod._client_ready2(client, db) for mod in self.modules])  # pylint: disable=W0212
 		except Exception:
 			logging.exception("Failed to send mod init complete signal")
 		if self.added_modules:
 			await self.added_modules(self)
 
-	async def send_ready_one(self, mod, client, db, allclients, core=False):
-		if core:
-			mod.allclients = allclients
+	async def send_ready_one(self, mod, client, db, allclients):
+		mod.allclients = allclients
 
 		try:
 			await mod.client_ready(client, db)
