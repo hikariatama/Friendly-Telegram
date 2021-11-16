@@ -18,13 +18,7 @@
 
 import logging
 
-try:
-    import coloredlogs  # Optional support for https://pypi.org/project/coloredlogs
-except ModuleNotFoundError:
-    _formatter = logging.Formatter
-else:
-    _formatter = coloredlogs.ColoredFormatter
-
+_formatter = logging.Formatter
 
 class MemoryHandler(logging.Handler):
     """Keeps 2 buffers. One for dispatched messages. One for unused messages. When the length of the 2 together is 100
